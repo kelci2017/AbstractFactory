@@ -1,5 +1,13 @@
 package main;
 
+import main.Accessories.Socks;
+import main.base.AbstractStuff;
+import main.clothes.Jackets;
+import main.factory.AbstractFactory;
+import main.shoes.Sandals;
+import main.shoes.Hiking;
+import main.shoes.WinterBoots;
+
 public class StoreOwner {
 
     public static void main(String[] args) {
@@ -8,9 +16,16 @@ public class StoreOwner {
 
     }
     public void createOrder(){
-        // without using Abstract Factory
-//       HeelBoots heelBoots = new HeelBoots(String.valueOf(Color.Black), 2, 7);
-//       FlatBoots flatBoots = new FlatBoots(String.valueOf(Color.Red), 20, 9);
+        //without using Abstract Factory
+
+       WinterBoots winterBoots = new WinterBoots(String.valueOf(Enums.Color.Black), 2, 7);
+       Jackets jacket = new Jackets(String.valueOf(Enums.Color.Red), 20, 9);
+       Socks socks = new Socks(String.valueOf(Enums.Color.Red), 200, 7);
+
+       promoteBoots(winterBoots, 20);
+       promoteJackets(jacket, 100);
+       promoteSocks(socks, 1);
+
 //       FlatSandals flatSandals = new FlatSandals(String.valueOf(Color.Green), 1, 6);
 //       HeelSandals heelSandals = new HeelSandals(String.valueOf(Color.Grey), 3, 8);
 //
@@ -18,16 +33,41 @@ public class StoreOwner {
 //       int size = heelBoots.getShoesSize();
 //       int quantity = heelBoots.getQuantity();
 
-        //new an instance of shoes producer
-        ShoesFactoryProducer shoesFactoryProducer = new ShoesFactoryProducer();
-        //producer has boot factories
-        AbstractShoesFactory bootsFactory = shoesFactoryProducer.getFactory(Enums.Type.Boot);
-        //just tell the factory what type of boots do you want
-        AbstractShoes heelBoots = bootsFactory.produceShoes(Enums.Type.Heel, String.valueOf(Enums.Color.Black), 2, 7);
-        //producer has sandal factories
-        AbstractShoesFactory sandalsFactory = shoesFactoryProducer.getFactory(Enums.Type.Sandal);
-        //just tell the factory what type of sandals do you wnat
-        AbstractShoes flatSandals = bootsFactory.produceShoes(Enums.Type.Flat, String.valueOf(Enums.Color.Grey), 4, 6);
-        System.out.println("my shoes color, size and quantity is " + heelBoots.getShoesColor() + heelBoots.getShoesSize() + heelBoots.getQuantity());
+
+        FactoryProducer factoryProducer = new FactoryProducer();
+
+        AbstractFactory shoesFactory = factoryProducer.getFactory(Enums.Type.Shoes);
+        AbstractStuff boots = shoesFactory.produce(Enums.Type.Winter, String.valueOf(Enums.Color.Black), 2, 7);
+
+        AbstractFactory clothesFactory = factoryProducer.getFactory(Enums.Type.Clothes);
+        AbstractStuff jackets = clothesFactory.produce(Enums.Type.OutDoor, String.valueOf(Enums.Color.Grey), 4, 6);
+
+        AbstractFactory accessoriesFactory = factoryProducer.getFactory(Enums.Type.Accessories);
+        AbstractStuff sockets = accessoriesFactory.produce(Enums.Type.Indoor, String.valueOf(Enums.Color.Grey), 4, 6);
+
+        promote(jackets, 20);
+        promote(boots, 10);
+        promote(sockets, 1);
+
+        System.out.println("my shoes color, size and quantity is " + boots.getColor() + boots.getSize() + boots.getQuantity());
+
+    }
+
+    public void promote(AbstractStuff stuff, int price)
+    {
+        stuff.setPrice(price);
+    }
+
+    public void promoteBoots(WinterBoots boots, int price)
+    {
+        boots.setPrice(price);
+    }
+    public void promoteJackets(Jackets jackets, int price)
+    {
+        jackets.setPrice(price);
+    }
+    public void promoteSocks(Socks socks, int price)
+    {
+        socks.setPrice(price);
     }
 }

@@ -1,17 +1,27 @@
 package main;
 
 public class Enums {
-    enum Type {
-        Heel,
-        Flat,
-        Boot,
-        Sandal
-    }
 
-    enum Color {
+    public enum Color {
         Black,
         Red,
         Grey,
         Green
+    }
+
+    public enum Type {
+        Accessories,
+        Shoes,
+        Clothes,
+        Winter,
+        OutDoor,
+        Indoor
+    }
+
+    public enum ClothesType {
+        Coat,
+        Shirt,
+        Pants,
+        Jeans
     }
 }
